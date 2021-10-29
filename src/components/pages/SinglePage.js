@@ -14,6 +14,7 @@ const SinglePage = ({Component, dataType}) => {
 
         useEffect(() => {
             updateData()
+        // eslint-disable-next-line react-hooks/exhaustive-deps
         }, [id])
 
         const updateData = () => {

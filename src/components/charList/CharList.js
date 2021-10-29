@@ -1,4 +1,4 @@
-import {useState, useEffect, useRef} from 'react'; 
+import {useState, useEffect, useRef, useMemo} from 'react'; 
 import useMarvelService from '../../services/MarvelService';
 import Spinner from '../spinner/Spinner';
 import ErrorMessage from '../errorMessage/ErrorMessage';
@@ -31,6 +31,7 @@ const CharList = (props) => {
 
     useEffect( () => {
         onRequest(offset, true);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
     const onRequest = (offset, initial) => {
@@ -96,9 +97,14 @@ const CharList = (props) => {
         )
     }
 
+    const elements = useMemo( () => {
+        return setContent(process, () => renderItems(charList), newItemLoading)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [process]);
+
     return (
         <div className="char__list">
-            {setContent(process, () => renderItems(charList), newItemLoading)}
+            {elements}
             <button 
                 className="button button__main button__long"
                 disabled={newItemLoading}
